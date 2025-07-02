@@ -1,0 +1,16 @@
+{% extends 'Company/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+
+<h5>Project Application Rejected</h5>
+
+    <p>We Regret To Inform You That Your Project Application Has Been Rejected. Thank You For Your Interest.</p>
+
+
+    <a href="{% url 'index' %}">Back to Home</a>
+
+{% endblock %}

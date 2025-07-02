@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+    <style>
+        
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #34a853;
+            --background-color: #f5f5f5;
+            --text-color: #333333;
+            --error-color: #d93025;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            padding-right: 65px;
+
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .alert {
+            background-color: #e8f0fe;
+            border-left: 4px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        form p {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        form label {
+            color: var(--text-color);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        form input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+        
+        form input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #1669d9;
+        }
+        
+        p {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .errorlist {
+            color: var(--error-color);
+            list-style-type: none;
+            padding: 0;
+            margin: 5px 0 0;
+            font-size: 12px;
+        }
+        
+        /* Custom checkbox style */
+        input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        input[type="checkbox"] + label {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 20px;
+            font-size: 14px;
+        }
+        
+        input[type="checkbox"] + label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #5f6368;
+            background: #fff;
+            border-radius: 2px;
+            transition: all .3s ease;
+        }
+        
+        input[type="checkbox"]:checked + label:before {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        input[type="checkbox"]:checked + label:after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        /* Floating label animation */
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .form-group label {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            background-color: #fff;
+            padding: 0 4px;
+            color: #5f6368;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: 0;
+            font-size: 12px;
+            color: var(--primary-color);
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+        }
+        </style></head><body>
+        <div class="container">
+            <h2>Admin Registration</h2>
+        
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        
+            <form method="POST" action="{% url 'admin_reg' %}">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field }}
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {% if field.errors %}
+                            <ul class="errorlist">
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit">Register</button>
+            </form>
+        
+            <p>Already have an account? <a href="{% url 'Adminlog' %}">Login here</a>.</p>
+        </div>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const inputs = form.querySelectorAll('input:not([type="checkbox"])');
+        
+            inputs.forEach(input => {
+                input.setAttribute('placeholder', ' ');
+            });
+        
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const button = this.querySelector('button');
+                const originalText = button.textContent;
+                button.textContent = 'Processing...';
+                button.disabled = true;
+        
+                // Simulate form submission (replace with actual submission logic)
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    // Here you would typically submit the form
+                    this.submit();
+                }, 2000);
+            });
+        });
+        
+        // Add ripple effect to button
+        function createRipple(event) {
+            const button = event.currentTarget;
+        
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+        
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+            circle.classList.add("ripple");
+        
+            const ripple = button.getElementsByClassName("ripple")[0];
+        
+            if (ripple) {
+                ripple.remove();
+            }
+        
+            button.appendChild(circle);
+        }
+        
+        const button = document.querySelector("button");
+        button.addEventListener("click", createRipple);
+        </script>
+        </body></html>

@@ -1,0 +1,93 @@
+
+{% extends 'Company/base.html' %}
+
+{% block title %}
+    Edit Project
+{% endblock %}
+{% block content %}
+<style>
+ body {
+  background-color: #f3f4f6;  
+ 
+}
+
+.ht {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  margin-top:8em;
+  margin-bottom:3em;
+  margin-left: 35em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-control {
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="file"] {
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e2e8f0;
+  color: #4a5568;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #cbd5e0;
+}
+
+input[type="submit"] {
+  background-color: #ecda54;
+  color: white;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+input[type="submit"]:hover {
+  background-color: transparent;
+  border: 1px solid #ddd;
+  color:#ECDA54;
+  border-color:#ECDA54 !important;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3498db;
+}
+</style>
+
+
+<div class="ht">
+    <form action="{% url 'bulkupview' %}" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <input type="file" name="csvfile" id="csvfile" class="form-control" accept=".csv">
+        <input type="submit" value="Upload CSV" class="form-control">
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+  body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .chat-container {
+      width: 320px;
+      background-color: #ffffff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+
+  .chat-header {
+      background-color: #ECDA54;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+  }
+
+  .chat-messages {
+      height: 300px;
+      overflow-y: auto;
+      padding: 15px;
+      background-color: #f8f9fa;
+  }
+
+  .message-bubble {
+      background-color: #e9ecef;
+      border-radius: 18px;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      max-width: 80%;
+      word-wrap: break-word;
+      line-height: 1.4;
+      font-size: 14px;
+  }
+
+  .message-bubble.sent {
+      background-color: #ECDA54;
+      color: white;
+      margin-left: auto;
+  }
+
+  .chat-input {
+      display: flex;
+      padding: 10px;
+      background-color: #ffffff;
+      border-top: 1px solid #e0e0e0;
+  }
+
+  #message-input {
+      flex-grow: 1;
+      border: none;
+      padding: 10px;
+      border-radius: 20px;
+      margin-right: 10px;
+      background-color: #f1f3f5;
+  }
+
+  #send-button {
+      background-color: #ECDA54;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+
+  #send-button:hover {
+      background-color: #5f4dd1;
+  }
+
+  #post-form {
+      padding: 20px;
+      background-color: #ffffff;
+  }
+
+  .form-input {
+      width: 93%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      font-size: 14px;
+  }
+
+  .form-submit {
+      width: 100%;
+      padding: 10px;
+      background-color: #ECDA54;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+  }
+
+  .form-submit:hover {
+      background-color: #5f4dd1;
+  }
+</style>
+<body>
+{% comment %} 
+<div align="center">
+    <h2>Django Chat</h2>
+</div> {% endcomment %}
+{% comment %} 
+
+<div class="container">
+   
+
+    <form id="post-form" method="POST" action="checkview">
+        {% csrf_token %}
+        <label>Room Name</label>
+        <input type="text" name="room_name" id="room_name" width="100px" />
+        <label>Username</label>
+        <input type="text" name="username" id="username" width="100px" />
+        <input type="submit" value="Enter Room">
+    </form>
+</div> {% endcomment %}
+
+<div class="chat-container">
+  <div class="chat-header">
+      GigFind Chat
+  </div>
+  <div class="chat-messages">
+      <div class="message-bubble">Welcome to GigFind Chat!</div>
+      <div class="message-bubble sent">Hey there!</div>
+  </div>
+  <form id="post-form" method="POST" action="checkview">
+    {% csrf_token %}
+    <input type="text" name="room_name" id="room_name" class="form-input" placeholder="Enter room name" required>
+    <input type="text" name="username" id="username" class="form-input" placeholder="Choose a username" required>
+    <input type="submit" value="Join Chat" class="form-submit">
+</form>
+</div>
+
+</body>
+
+<script>
+  document.getElementById('post-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const roomName = document.getElementById('room_name').value;
+      const username = document.getElementById('username').value;
+      if (roomName && username) {
+          this.submit();
+      } else {
+          alert('Please fill in both room name and username.');
+      }
+  });
+
+  document.getElementById('send-button').addEventListener('click', sendMessage);
+  document.getElementById('message-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+          e.preventDefault();
+          sendMessage();
+      }
+  });
+
+  function sendMessage() {
+      const messageInput = document.getElementById('message-input');
+      const message = messageInput.value.trim();
+      if (message) {
+          const chatMessages = document.querySelector('.chat-messages');
+          const messageElement = document.createElement('div');
+          messageElement.classList.add('message-bubble', 'sent');
+          messageElement.textContent = message;
+          chatMessages.appendChild(messageElement);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+          messageInput.value = '';
+      }
+  }
+
+  
+</script>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+    
+    name 
+    email 
+    mobile 
+    address 
+    city 
+    pincode 
+    password 
+    pic 
+    user_type 
+    website 
+    resume 
+    -->
+    <form action="{% url 'admin_update_user' pk=user.pk %}" method="post">
+        {% csrf_token %}
+        
+        <label for="">Name</label>
+        <input type="text" name="new_name" id="">
+        <label for="">Email</label>
+        <input type="email" name="new_email" id="">
+        <label for="">Mobile</label>
+        <input type="number" name="new_mobile" id="">
+        <label for="">Address</label>
+        <textarea name="new_address" id="" rows="20" cols="20"></textarea>
+        <label for="">City</label>
+        <input type="text" name="new_city" id="">
+        <label for="">Pincode</label>
+        <input type="number" name="new_pincode" id="">
+        <label for="">Password</label>
+        <input type="password" name="new_password" id="">
+        <label for="">Picture</label>
+        <input type="file" name="new_pic" id="">
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

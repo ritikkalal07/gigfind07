@@ -1,0 +1,17 @@
+{% extends 'Company/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+
+
+<h5>Job Application Accepted</h5>
+
+<p>Congratulations! Your job application has been accepted.</p>
+
+<a href="{% url 'index' %}">Back to Home</a>
+
+
+{% endblock %}

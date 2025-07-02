@@ -1,0 +1,169 @@
+{% extends 'Freelancer/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1rem;
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .table thead th {
+        background-color: #f8f9fa;
+        color: #333;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 12px;
+        border-bottom: 2px solid #dee2e6;
+    }
+    
+    .table tbody td {
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6;
+        color: #333;
+    }
+    
+    .table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #e9ecef;
+        transition: background-color 0.3s ease;
+    }
+
+    @media screen and (max-width: 600px) {
+        .table thead {
+            display: none;
+        }
+        
+        .table, .table tbody, .table tr, .table td {
+            display: block;
+            width: 100%;
+        }
+        
+        .table tr {
+            margin-bottom: 15px;
+        }
+        
+        .table td {
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+        }
+        
+        .table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            text-align: left;
+            font-weight: bold;
+        }
+    }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .status-active {
+        background-color: #28a745;
+        color: white;
+    }
+    
+    .status-inactive {
+        background-color: #dc3545;
+        color: white;
+    }
+    
+    .status-pending {
+        background-color: #ffc107;
+        color: #333;
+    }
+    
+    body {
+        font-family: 'Roboto', Arial, sans-serif;
+        background-color: #f4f7f9;
+        color: #333;
+        line-height: 1.6;
+      }
+      
+
+    .con {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-top:7em;
+        padding-bottom:3em;
+    }
+    
+    .title{
+        text-align: center;
+        margin-bottom: 30px;
+        color: black;
+    }
+    
+</style>
+<body>
+<div class="con">
+                
+<h2 class="title">Projects Applied History And Status</h2>
+<table class="table">
+  
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Company Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in apply_project %}    
+        <tr>
+            <td>{{ i.name }}</td>
+            <td>{{ i.title }}</td>
+            <td>{{ i.company_name }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.mobile }}</td>
+            <td>{{ i.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+
+<script>
+   
+    document.addEventListener('DOMContentLoaded', function() {
+        const statusElements = document.querySelectorAll('.status');
+        statusElements.forEach(element => {
+            const status = element.textContent.toLowerCase();
+            if (status === 'active') {
+                element.classList.add('status-active');
+            } else if (status === 'inactive') {
+                element.classList.add('status-inactive');
+            } else if (status === 'pending') {
+                element.classList.add('status-pending');
+            }
+        });
+    });
+    </script>
+</body>
+{% endblock %}

@@ -1,0 +1,212 @@
+{% extends 'Company/base.html' %}
+
+{% block title %}
+    Edit Project
+{% endblock %}
+
+{% block content %}
+<style>
+   
+
+  body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  #con {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding-top:5em;
+    padding-bottom: 3em;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .card-body {
+    padding: 30px;
+  }
+  
+  h4 {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 25px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 600;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+  }
+  .cp-text{
+    margin-bottom:0em;
+  }
+  
+  .btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .btn-primary {
+    background-color: #3498db;
+    border: none;
+    color: #ffffff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2980b9;
+  }
+  
+  #del {
+    background-color: #e74c3c;
+  }
+  
+  #del:hover {
+    background-color: #c0392b;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      margin: 20px;
+    }
+    .cp-text{
+      margin-bottom:0em;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+  }
+  
+</style>
+
+    <div class="container" id="con">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="text-center">Edit Project Details</h4>
+
+                        <form method="post" action="{% url 'edit_projects_details' pk=project.pk %}">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="company_name">Company Name:</label>
+                                <input type="text" class="form-control" id="company_name"  name="company_name" value="{{request.session.name}} " readonly>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="title">Project Title:</label>
+                                <input type="text" class="form-control" id="title" value="{{project.title}}" name="title" required>
+                            </div>
+                
+                             <div class="form-group">
+                                <label for="city">City:</label>
+                                <input type="text" class="form-control" id="city" value="{{project.city}}" name="city" required>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="description">Project Description:</label>
+                                <textarea class="form-control" id="description" value="{{project.description}}" name="description" rows="4" required></textarea>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="budget">Budget:</label>
+                                <input type="text" class="form-control" id="budget" value="{{project.budget}}" name="budget" required>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="duration">Duration:</label>
+                                <select class="form-control" id="duration" value="{{project.duration}}" name="duration" required>
+                                    <option value="more_than_6_months">More than 6 months</option>
+                                    <option value="3_to_6_months">3 to 6 months</option>
+                                    <option value="1_to_3_months">1 to 3 months</option>
+                                    <option value="less_than_1_month">Less than 1 month</option>
+                                </select>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="posted_at">Posted At:</label>
+                                <input type="date" class="form-control" id="posted_at" value="{{project.posted_at}}" name="posted_at" required>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="skills">Skills Required:</label>
+                                <input type="text" class="form-control" id="skills" value="{{project.skills}}" name="skills" required>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="experience">Experience Required:</label>
+                                <input type="text" class="form-control" id="experience" value="{{project.experience}}" name="experience" required>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="category">Project Category:</label>
+                                <input type="text" class="form-control" id="category" value="{{project.category}}" name="category" required>
+                            </div>
+                
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            {% comment %} <a class="btn btn-secondary mt-2" id="back" href="{% url 'show_all_vacancies' %}">Back to Project List</a> {% endcomment %}
+                            <a class="btn btn-primary" id="del" href="{% url 'delete_project'  pk=project.pk %}">Delete Project</a>
+                        </form>
+
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

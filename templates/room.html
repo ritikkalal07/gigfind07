@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Chat Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 350px;
+            height: 600px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: #ECDA54;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            position: relative;
+            clear: both;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .message.user {
+            float: right;
+            background-color: #dcf8c6;
+        }
+
+        .message.other {
+            float: left;
+            background-color: #ffffff;
+        }
+
+        .message::after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        #message {
+            flex-grow: 1;
+            border: none;
+            padding: 10px;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #ECDA54;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #128c7e;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="chat-header">
+        Chat Room: {{room_details.name}}
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <!-- Messages will be dynamically added here -->
+    </div>
+    <form id="post-form" class="chat-input">
+        {% csrf_token %}
+        <input type="hidden" name="username" id="username" value="{{username}}"/>
+        <input type="hidden" name="room_id" id="room_id" value="{{room_details.id}}"/>
+        <input placeholder="Type Messages.." type="text" name="message" id="message" />
+        <input type="submit" value="➤">
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        let latestMessageId = null; // Keep track of the latest message ID
+
+        const updateMessages = function() {
+            $.ajax({
+                type: 'GET',
+                url: "/getMessages/{{room}}/",
+                data: {
+                    last_id: latestMessageId // Send the latest message ID to server
+                },
+                success: function(response) {
+                    console.log(response);
+                    response.messages.forEach(function(message) {
+                        if (!latestMessageId || message.id > latestMessageId) {
+                            const messageClass = message.user === '{{username}}' ? 'user' : 'other';
+                            const messageElement = $('<div class="message ' + messageClass + '"><b>' + message.user + '</b><p>' + message.value + '</p><span class="time-left">' + message.date + '</span></div>');
+                            $("#chat-messages").append(messageElement);
+
+                            // Update latest message ID
+                            latestMessageId = message.id;
+                        }
+                    });
+                },
+                error: function(response) {
+                    console.error('An error occurred:', response);
+                }
+            });
+        };
+
+        // Initial update
+        updateMessages();
+
+        // Periodic updates
+        setInterval(updateMessages, 1000);
+
+        // Submit message form
+        $(document).on('submit', '#post-form', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '/send',
+                data: {
+                    username: $('#username').val(),
+                    room_id: $('#room_id').val(),
+                    message: $('#message').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function(data) {
+                    // After successful submission, update messages to include the new message
+                    updateMessages();
+                    $('#message').val(''); // Clear the input field
+                },
+                error: function(response) {
+                    console.error('An error occurred:', response);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

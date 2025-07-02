@@ -1,0 +1,245 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="{% static 'css/admin_style.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+    body {
+        font-family: 'Roboto', Arial, sans-serif;
+        background-color: #f4f7f9;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      .site-section {
+        padding: 60px 0;
+        padding-top:5em;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+      h2 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 40px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -15px;
+      }
+      .col-md-6 {
+        width: 50%;
+        padding: 15px;
+      }
+      .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      }
+      .card-body {
+        padding: 25px;
+      }
+      .card-title {
+        font-size: 1.5rem;
+        color: #3498db;
+        margin-bottom: 20px;
+      }
+      .text-primary {
+        color: black !important;
+      }
+      .list-unstyled {
+        list-style-type: none;
+        padding: 0;
+      }
+      .list-unstyled li {
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+      }
+      .text-black {
+        color: #34495e;
+        font-weight: 600;
+      }
+      .cp-text{
+        margin-bottom:0em;
+      }
+      .text-center {
+        margin-top: -50px ;
+    }
+      #edit {
+        background-color: #3498db;
+        color: #fff;
+        margin-right: 10px;
+      }
+      #edit:hover {
+        background-color: #2980b9;
+      }
+      .btn-danger {
+        background-color: #e74c3c;
+        border-radius: 24em;
+        color: #fff;
+        padding: 10px 20px;
+      
+      }
+      .btn-danger:hover {
+        background-color: #c0392b;
+      }
+      #edit {
+        padding: 0.75rem 1.5rem;
+        border-radius: 24em;
+        padding: 10px 25px ;
+        border-color:white;
+      } 
+      
+      #edit:hover{
+        border-color:white;
+      }
+      
+a:link, a:visited {
+   
+  text-align: center;
+  text-decoration: none;
+}
+      
+      </style>
+</head>
+<body>
+  
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<i class="bx bxs-hand"></i>
+		<span class="text">{{request.session.username}}</span>
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">AdminHub</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="#">
+				<a href="{% url 'dashboard' %}">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">My Store</span>
+				</a>
+			</li>
+			<li class="active">
+				<a href="{% url 'admin_project' %}">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Total Projects</span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'admin_applied' %}">
+					<i class='bx bxs-message-dots' ></i>
+					<span class="text">Total Applied Projects</span>
+				</a>
+			</li>
+			<li>
+				<a href="#x">
+					<i class='bx bxs-group' ></i>
+					<span class="text">Create projects</span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'admin_users' %}">
+					<i class='bx bxs-group' ></i>
+					<span class="text">Users</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="#">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<a href="#" class="nav-link">Categories</a>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">8</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="img/people.png">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+    <section class="site-section">
+        <h2 class="text-center">All Projects</h2>
+          <div class="container">
+              <div class="row">
+                  {% for project in projects %}
+                      <div class="col-md-6 mb-6">
+                          <div class="card">
+                              <div class="card-body">
+                                  <h5 class="card-title text-primary mb-3">{{ project.title }}</h5>
+                                  <ul class="list-unstyled">
+                                      <li><strong class="text-black">Company:</strong>{{ project.company_name}}</li>
+                                      <li><strong class="text-black">City:</strong> {{ project.city }}</li>
+                                      <li><strong class="text-black">Description:</strong> {{ project.description }}</li>
+                                      <li><strong class="text-black">Budget:</strong> {{ project.budget }}</li>
+                                      <li><strong class="text-black">Duration:</strong> {{ project.duration }}</li>
+                                      <li><strong class="text-black">Posted At:</strong> {{ project.posted_at }}</li>
+                                      <li><strong class="text-black">Skills:</strong> {{ project.skills }}</li>
+                                      <li><strong class="text-black">Experience:</strong> {{ project.experience }}</li>
+                                      <li><strong class="text-black">Category:</strong> {{ project.category }}</li>
+                                  </ul>
+                                  <td><a class="btn btn-primary" id="edit" href="{% url 'admin_edit_project' pk=project.pk %}">Edit</a></td>
+                                  <td><a class="btn btn-danger"  href="{% url 'admin_delete_project' pk=project.pk %}">Delete</a></td>
+                              </div>
+                          </div>
+                      </div>
+                  {% endfor %}
+                  
+              </div>
+          </div>
+      </section>
+    </section>
+
+	<script src="{% static 'js/admin_script.js' %}"></script>
+</body>
+</html>

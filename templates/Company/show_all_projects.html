@@ -1,0 +1,140 @@
+{% extends 'Company/base.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+
+{% block content %}
+<style >
+  
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: #f4f7f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+.site-section {
+  padding: 60px 0;
+  padding-top:6em;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+h2 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 40px;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -15px;
+}
+.col-md-6 {
+  width: 50%;
+  padding: 15px;
+}
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.card-body {
+  padding: 25px;
+}
+.card-title {
+  font-size: 1.5rem;
+  color: #3498db;
+  margin-bottom: 20px;
+}
+.text-primary {
+  color: black !important;
+}
+.list-unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+.list-unstyled li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+.text-black {
+  color: #34495e;
+  font-weight: 600;
+}
+.cp-text{
+  margin-bottom:0em;
+}
+
+#edit {
+  background-color: #3498db;
+  color: #fff;
+  margin-right: 10px;
+}
+#edit:hover {
+  background-color: #2980b9;
+}
+.btn-danger {
+  background-color: #e74c3c;
+  border-radius: 24em;
+  color: #fff;
+  padding: 10px 20px;
+
+}
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+#edit {
+  padding: 0.75rem 1.5rem;
+  border-radius: 24em;
+  padding: 10px 25px ;
+  border-color:white;
+} 
+
+#edit:hover{
+  border-color:white;
+}
+
+</style>
+
+<section class="site-section">
+  <h2 class="text-center">All Projects</h2>
+    <div class="container">
+        <div class="row">
+            {% for project in projects %}
+                <div class="col-md-6 mb-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary mb-3">{{ project.title }}</h5>
+                            <ul class="list-unstyled">
+                                <li><strong class="text-black">Company:</strong> {{request.session.name}} </li>
+                                <li><strong class="text-black">City:</strong> {{ project.city }}</li>
+                                <li><strong class="text-black">Description:</strong> {{ project.description }}</li>
+                                <li><strong class="text-black">Budget:</strong> {{ project.budget }}</li>
+                                <li><strong class="text-black">Duration:</strong> {{ project.duration }}</li>
+                                <li><strong class="text-black">Posted At:</strong> {{ project.posted_at }}</li>
+                                <li><strong class="text-black">Skills:</strong> {{ project.skills }}</li>
+                                <li><strong class="text-black">Experience:</strong> {{ project.experience }}</li>
+                                <li><strong class="text-black">Category:</strong> {{ project.category }}</li>
+                            </ul>
+                            <td><a class="btn btn-primary" id="edit" href="{% url 'edit_projects_details' pk=project.pk %}">Edit</a></td>
+                            <td><a class="btn btn-danger"  href="{% url 'delete_project' pk=project.pk %}">Delete</a></td>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

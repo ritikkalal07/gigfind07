@@ -1,0 +1,398 @@
+{% extends 'Company/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        line-height: 1.6;
+    }
+    
+    .con {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        padding-top: 7em;
+        padding-bottom: 3em;
+    }
+    
+    #border {
+        color: #2c3e50;
+        font-size: 24px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ecda54;
+        padding-bottom: 10px;
+    }
+    
+    .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .table thead {
+        background-color: #ecda54;
+        color: #fff;
+    }
+    
+    .table th, .table td {
+        padding: 15px;
+        text-align: left;
+    }
+    
+    .table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #e8f4fc;
+    }
+    
+    .btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    
+    .btn-success {
+        background-color: #2ecc71;
+        color: #fff;
+    }
+    
+    .btn-success:hover {
+        background-color: #27ae60;
+    }
+    
+    .btn-danger {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+    
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+    
+    .quantity-form {
+        display: inline-block;
+        margin: 0 5px;
+    }
+    
+    .quantity-form button {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        line-height: 1;
+        padding: 0;
+    }
+    
+    .proceed-btn {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 20px auto 0;
+        padding: 15px;
+        background-color: #ecda54;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .proceed-btn:hover {
+        background-color: translate;
+        border-color: #ecda54 !important;
+    }
+    
+    p {
+        margin-top: 0;
+        margin-bottom: 0rem;
+    }
+    
+    @media (max-width: 768px) {
+        .table {
+            font-size: 14px;
+        }
+    
+        .table th, .table td {
+            padding: 10px;
+        }
+    
+        .quantity-form button {
+            width: 25px;
+            height: 25px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="con">
+    <h4 id="border">My Cart</h4>
+    
+    {% if cart_item %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Subscription Name</th>
+                    <th>Subscription Month</th>
+                    <th>Subscription Month Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_item %}
+                    <tr>
+                        <td>{{ item.subscription.subscription_name }}</td>
+                        <td>{{ item.subscription.subscription_month }}</td>
+                        <td>₹{{ item.subscription.subscription_month_price|floatformat:2 }}</td>
+                        <td>
+                            <form action="{% url 'decrement_quantity' item.id %}" method="post" class="quantity-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger">-</button>
+                            </form>
+                            
+                            <span>{{ item.subscription.subscription_month_qty }}</span>
+                            <form action="{% url 'increment_quantity' item.id %}" method="post" class="quantity-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-success">+</button>
+                            </form>                     
+                          
+                        </td>
+                        <td>₹{{ item.subscription.total_price }}</td>
+                        <td>
+                            <form action="{% url 'remove_from_cart' item.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+
+    <a href="{% url 'checkout'  %}" class="proceed-btn btn btn-primary">PROCEED TO CHECK OUT</a>
+</div>
+{% endblock %}
+
+
+{% comment %} {% extends 'Company/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        line-height: 1.6;
+    }
+    
+    .con {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        padding-top:7em;
+        padding-bottom:3em;
+
+    }
+    
+    #border {
+        color: #2c3e50;
+        font-size: 24px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ecda54;
+        padding-bottom: 10px;
+    }
+    
+    .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .table thead {
+        background-color: #ecda54;
+        color: #fff;
+    }
+    
+    .table th, .table td {
+        padding: 15px;
+        text-align: left;
+    }
+    
+    .table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #e8f4fc;
+    }
+    
+    .btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    
+    .btn-success {
+        background-color: #2ecc71;
+        color: #fff;
+    }
+    
+    .btn-success:hover {
+        background-color: #27ae60;
+    }
+    
+    .btn-danger {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+    
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+    
+    .quantity-form {
+        display: inline-block;
+        margin: 0 5px;
+    }
+    
+    .quantity-form button {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        line-height: 1;
+        padding: 0;
+    }
+    
+    .proceed-btn {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 20px auto 0;
+        padding: 15px;
+        background-color: #ecda54;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .proceed-btn:hover {
+        background-color: translate;
+        border-color:#ecda54 !important;
+    }
+    
+    p {
+        margin-top: 0;
+        margin-bottom: 0rem;
+    }
+    
+    @media (max-width: 768px) {
+        .table {
+            font-size: 14px;
+        }
+    
+        .table th, .table td {
+            padding: 10px;
+        }
+    
+        .quantity-form button {
+            width: 25px;
+            height: 25px;
+            font-size: 14px;
+        }
+    }
+    </style>
+<div class="con">
+
+    <h4 id="border">My Cart</h4>
+    
+    {% if cart_item %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Subscription Name</th>
+                    <th>Subscription Month</th>
+                    <th>Subscription Month Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_item %}
+                    <tr>
+                        <td>{{ item.subscription.subscription_name }}</td>
+                        <td>{{ item.subscription.subscription_month }}</td>
+                        <td>₹{{ item.subscription.subscription_month_price|floatformat:2 }}</td>
+                        <td>
+                            <form action="{% url 'increment_quantity' item.id %}" method="post" class="quantity-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-success">+</button>
+                            </form>
+                            
+                            <span>{{ item.subscription.subscription_month_qty }}</span>
+                                                    
+                            <form action="{% url 'decrement_quantity' item.id %}" method="post" class="quantity-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger">-</button>
+                            </form>
+                        </td>
+                        <td>₹{{ item.subscription.total_price|floatformat:2 }}</td>
+                        <td>
+                            <form action="{% url 'remove_from_cart' item.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+
+    <a href="{% url 'checkout' %}" class="proceed-btn btn btn-primary">PROCEED TO CHECK OUT</a>
+    </div>
+
+{% endblock %} {% endcomment %}

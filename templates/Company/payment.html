@@ -1,0 +1,247 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .center {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            margin: 15px;
+        }
+        
+        .w3-card-4 {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .w3-card-4:hover {
+            transform: translateY(-5px);
+        }
+        
+        .w3-container.w3-blue {
+            background: linear-gradient(45deg, #2196F3, #21CBF3);
+            color: white;
+            padding: clamp(15px, 4vw, 25px);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: clamp(1.5em, 5vw, 2.5em);
+            font-weight: 600;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: clamp(1px, 0.5vw, 2px);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .w3-container {
+            padding: clamp(20px, 5vw, 30px);
+        }
+        
+        .w3-container p {
+            color: #666;
+            line-height: 1.6;
+            font-size: clamp(1em, 3vw, 1.1em);
+            text-align: center;
+            margin-bottom: clamp(15px, 4vw, 25px);
+        }
+        
+        #paypal-button-container {
+            margin: clamp(15px, 3vw, 20px) 0;
+            padding: clamp(5px, 2vw, 10px);
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        footer.w3-container.w3-blue {
+            padding: clamp(10px, 3vw, 15px);
+            text-align: center;
+        }
+        
+        footer h5 {
+            margin: 0;
+            font-size: clamp(0.8em, 2.5vw, 0.9em);
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .center {
+                margin: 10px;
+            }
+            
+            .w3-card-4 {
+                border-radius: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .center {
+                padding: 10px;
+                margin: 5px;
+            }
+            
+            .w3-card-4 {
+                border-radius: 8px;
+            }
+            
+            #paypal-button-container {
+                padding: 5px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .center {
+                padding: 5px;
+                margin: 2px;
+            }
+            
+            .w3-container {
+                padding: 15px;
+            }
+        }
+        
+        @keyframes buttonPulse {
+            0% { opacity: 0.8; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(0.98); }
+        }
+        
+        #paypal-button-container:empty {
+            height: 45px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            animation: buttonPulse 1.5s infinite;
+        }
+        
+        .w3-container p:hover {
+            color: #333;
+            transition: color 0.3s ease;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            }
+            
+            .w3-card-4 {
+                background: #1a1a1a;
+            }
+            
+            .w3-container p {
+                color: #e0e0e0;
+            }
+            
+            .w3-container p:hover {
+                color: #ffffff;
+            }
+        }
+        
+        @media (hover: none) {
+            .w3-card-4:hover {
+                transform: none;
+            }
+            
+            .w3-container p:hover {
+                color: inherit;
+            }
+        }
+    </style>
+
+    <div class="center">
+        <div class="w3-card-4">
+            <header class="w3-container w3-blue">
+                <h1> POST YOUR PROJECT!</h1>
+            </header>
+
+            <div class="w3-container">
+                <p>Post your project here to find the right talent. Let freelancers on Appling bring your ideas to life!</p>
+
+                <div id="paypal-button-container"></div>
+
+                <script
+                    src="https://www.paypal.com/sdk/js?client-id=AZq1GViEUtkyW4LZwWodbyQRAoawhfrNhEGXR8ASV-OZVQg9KSzanDlNJkWUdTY5C4YjAzJaI9kYOwnS&currency=USD">
+                </script>
+
+                {% comment %} <script>
+                    paypal.Buttons({
+
+                        createOrder: function (data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: '10000'
+                                    }
+                                }]
+                            });
+                        },
+
+                        onApprove: function (data, actions) {
+                            return actions.order.capture().then(function (details) {
+                                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                            });
+                        },
+
+                        onError: function (err) {
+                            alert('An error occurred. Please ensure the selected currency is accepted by the seller.');
+                        }
+
+                    }).render('#paypal-button-container');
+                </script> {% endcomment %}
+                <script>
+                    paypal.Buttons({
+                
+                        createOrder: function (data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: '10000' // Amount in USD
+                                    }
+                                }]
+                            });
+                        },
+                
+                        onApprove: function (data, actions) {
+                            return actions.order.capture().then(function (details) {
+                                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                
+                                if (confirm('Would you like to download your invoice?')) {
+                                    window.location.href = '/invoice/';
+                                } else {
+                                    window.location.href = '/thank-you/';
+                                }
+                            });
+                        },
+                
+                        onError: function (err) {
+                            alert('An error occurred. Please ensure the selected currency is accepted by the seller.');
+                        }
+                
+                    }).render('#paypal-button-container');
+                </script>
+                
+            </div>
+
+            <footer class="w3-container w3-blue">
+                <h5>&copy; Professional GigFind.</h5>
+            </footer>
+        </div>
+    </div>
+</body>

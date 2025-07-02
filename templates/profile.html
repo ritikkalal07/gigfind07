@@ -1,0 +1,193 @@
+{% extends template_name %} 
+
+{% block title %}
+    Profile
+{% endblock %}  
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Form</title>
+    <style>
+
+input[type=email], input[type=password], input[type=text], input[type=tel], select.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    line-height: 1.6;
+  }
+
+.row{
+    padding-top:3em;
+    padding-bottom:3em;
+}
+
+img.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+
+#userType{
+    height:3em;
+}
+
+.text-center {
+    color:#2C3E50;
+}
+.cp-text{
+    margin-bottom:0em;
+  }
+
+  #probtn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 24em;
+    padding: 10px 12px;
+   
+} 
+
+#con {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    max-width: 800px;
+    padding: 30px;
+    padding-top: 1em;
+    margin-top: 7em;
+}
+
+#probtn {
+   
+    border-radius:25px;
+    background-color: #ECDA54;
+    width:46em;
+    height:50px;
+  }
+
+
+ #probtn:hover {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    color:#ECDA54;
+    border-color:#ECDA54 !important;
+  }
+  
+
+.section {
+    margin-top: 2em;
+}
+
+#log-link{
+    color:black;
+}
+
+.link {
+    margin-top: 1em;
+}
+
+    </style>
+</head>
+<body>
+    <div class="section">
+        <div class="container" id="con">
+            <div class="row">
+              
+                <div class="col-md-12">
+                    <div class="billing-details">
+                        <form name="profile" method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <h1 class="text-center">Profile Form</h1>
+                            <div class="form-group">
+                                <label for="userType">Select User Type:</label>
+                                <select class="form-control" id="userType" name="userType" onchange="showFields()">
+                                    <option>---Select User Type---</option>
+                                    <option value="company" {% if user.user_type == 'company' %}selected{% endif %}>Company</option>
+                                    <option value="applicant" {% if user.user_type == 'applicant' %}selected{% endif %}>Applicant</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile">Mobile:</label>
+                                <input type="tel" class="form-control" id="mobile" name="mobile" value="{{ user.mobile }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address:</label>
+                                <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City:</label>
+                                <input type="text" class="form-control" id="city" name="city" value="{{ user.city }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincode">Pincode:</label>
+                                <input type="text" class="form-control" id="pincode" name="pincode" value="{{ user.pincode }}" required>
+                            </div>
+                            <div class="form-group" id="companyFields" {% if user.user_type != 'company' %}style="display:none;"{% endif %}>
+                                <label for="website">Website:</label>
+                                <input type="text" class="form-control" id="website" name="website" value="{{ user.website }}">
+                                {% comment %} <label for="company_name">Company Name:</label>
+                                <input type="text" class="form-control" id="company_name" name="company_name" value="{{ user.company_name }}"> {% endcomment %}
+                            </div>
+                            {% comment %} <div class="form-group">
+                                <img src="{{ user.pic.url }}" width="100px" height="100px">
+                            </div> {% endcomment %}
+                            <div class="form-group">
+                                <label for="pic">Picture:</label><br>
+                                <img src="{{ user.pic.url }}" width="100px" height="100px"></br>
+                            </br><input type="file" class="form-control-file" id="pic" name="pic" accept="image/*">
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-primary" id="probtn" type="submit" value="Profile Update">
+                            </div>
+                            <div class="link" >
+                               Have an account ?  <b><a id="log-link" href="{% url 'login' %}">Login now</a></b>
+                            </div>
+                        </form>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    function showFields() {
+        var userType = document.getElementById("userType").value;
+        var companyFields = document.getElementById("companyFields");
+
+        if (userType === "company") {
+            companyFields.style.display = "block";
+        } else {
+            companyFields.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

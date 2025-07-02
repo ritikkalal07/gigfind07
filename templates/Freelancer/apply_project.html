@@ -1,0 +1,186 @@
+{% extends 'Freelancer/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<style>
+   
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background-color: #f4f7f9;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .con {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      margin: 40px auto;
+      max-width: 800px;
+      padding: 30px;
+      margin-top: 8em !important;
+    }
+  
+
+    .text-center {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .col-md-5{
+      flex: 1 0 41.66667%;
+      max-width: 90.66667%;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+   
+    .form-control {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #bdc3c7;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+    
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 100px;
+    }
+  
+    select.form-control {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 30px;
+    }
+
+    #bt{
+      border: 1px solid #ddd !important;
+    }
+    
+    #bt {
+      background-color: #ECDA54;
+      border: none;
+      color: #ffffff;
+      padding: 12px 30px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: block;
+      width: 100%;
+      border-radius: 25px;
+    }
+    
+   .text-center{
+    color:black;
+   }
+
+    #bt:hover {
+      background-color: transparent;
+      border: 1px solid #ddd;
+      color:#ECDA54;
+    }
+    
+    .form-control-file {
+      padding: 5px 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .con { /* Remove unused class reference */
+        /* No styles needed for this media query in the new structure */
+      }
+    }
+    
+   
+    
+</style>
+   
+        <div class="con mt-5">
+          <h2 class="text-center">You Are Applying In {{ projects.company_name }} For The Project Of {{ projects.title }}..!
+          </h2>
+
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <form name="apply_project" method="post" action="#" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="company_name">Company Name:</label>
+                            <input type="text" class="form-control" id="company_name" value="{{ projects.company_name }}"
+                                name="company_name" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title">Job Title:</label>
+                            <input type="text" class="form-control" id="title" value="{{ projects.title }}" name="title"
+                                readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" value="{{ user.name }}" name="name" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" value="{{ user.email }}" name="email"
+                                readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobile">Mobile:</label>
+                            <input type="tel" class="form-control" id="mobile" value="{{ user.mobile }}" name="mobile"
+                                readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <input type="text" class="form-control" id="address" value="{{ user.address }}" name="address"
+                                readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input type="text" class="form-control" id="city" value="{{ user.city }}" name="city" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pincode">Pincode:</label>
+                            <input type="text" class="form-control" id="pincode" value="{{ user.pincode }}" name="pincode"
+                                readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="attachments">Attachments:</label>
+                            <input type="file" class="form-control-file" id="attachments" name="attachments" required
+                                accept=".pdf, .doc, .docx, .txt">
+                        </div>
+
+                        <button type="submit" id="bt"class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+   
+{% endblock %}

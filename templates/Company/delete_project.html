@@ -1,0 +1,23 @@
+{% extends 'Company/base.html' %}
+
+{% block title %}
+    Delete Project Details
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Delete Project</h2>
+            <p class="card-text">Are you sure you want to delete the Project "{{ Project.title }}"?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

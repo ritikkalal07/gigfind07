@@ -1,0 +1,167 @@
+{% load static %}
+
+<!DOCTYPE html> 
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <title>Business Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+</head>
+<style>
+    .profile-dropdown { 
+        position: relative;
+    }
+        .dropdown-menu-bottom {  
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            bottom: calc(100% - 3.5rem); 
+            padding: 7px 20px;
+        }
+        
+        .profile-dropdown:hover .dropdown-menu-bottom { 
+            display: block;
+        }
+        
+    .btn-primary {
+        border-color: white !important;
+        border-radius:23px;
+        background-color: #ECDA54;
+      }
+      p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    #ch{
+        margin-bottom:5px;
+       
+    }
+     .btn-primary:hover {
+        background-color: transparent;
+        border: 1px solid #ddd;
+      }
+        .profile
+        {
+            border-radius: 50%;
+        }
+        .dropdown-menu
+        {
+            background-color: #ECDA54;
+            height:90px;
+           
+        }
+      
+</style>
+<body id="body">
+   
+    <header id="navigation" class="fixed-top navbar navbar-expand-lg">
+        <div class="container">
+            <div class="navbar-header"> <a class="navbar-brand" href="#body">
+                    <h1 id="logo"> GigFind</h1>
+                </a></div> <button type="button" class="navbar-toggler" data-toggle="collapse"
+                data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> 
+                <i class="fa fa-bars fa-lg"></i> </button>
+            <nav class="collapse navbar-collapse">
+                <ul id="#" class="nav navbar-nav ml-auto">
+                    <li ><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'post_project' %}">Post Project</a></li>
+                    <li><a href="{% url 'show_all_projects' %}">Show Projects</a></li>
+                    <li><a href="{% url 'subscription' %}">Subscription</a></li>
+                    <li><a href="{% url 'bulkuploadview' %}">Bulk Upload</a></li>
+                    <li><a href="{% url 'applications' %}">Aplications</a></li>
+                </ul>
+            </nav>
+
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+                    {% if request.session.email %}
+                        <li class="nav-item dropdown profile-dropdown">  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" href="{% url 'profile' %}">
+                                {{ request.session.name }} 
+                                <img src="{{ request.session.pic }}" class="profile" width="50px" height="50px">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-bottom"> <li><a href="{% url 'change-password' %}" id="ch" class="btn btn-primary">Change Password</a></li>
+                                <li><a href="{% url 'logout' %}" id="pro" class="btn btn-primary">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <button class="btn btn-primary" id="log">
+                            <a href="{% url 'login' %}" style="color: white;"><b>Login</b></a>
+                        </button>
+                    {% endif %}
+                </ul>
+            </div>
+            
+        </div>
+    </header>
+    
+{% include "messages.html" %}
+   
+{% block content %}
+{% endblock %}
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col">
+                <h4>company</h4>
+                <ul>
+                    <li><a href="#">about us</a></li>
+                    <li><a href="#">our services</a></li>
+                    <li><a href="#">privacy policy</a></li>
+                    <li><a href="#">affiliate program</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>get help</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">shipping</a></li>
+                    <li><a href="#">returns</a></li>
+                    <li><a href="#">order status</a></li>
+                    <li><a href="#">payment options</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>online shop</h4>
+                <ul>
+                    <li><a href="#">watch</a></li>
+                    <li><a href="#">bag</a></li>
+                    <li><a href="#">shoes</a></li>
+                    <li><a href="#">dress</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>follow us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</footer>
+<p class="cp-text"  style="background:#777; text-align: center; padding:15px;">
+    © Copyright 2024 Gigfind Freelancing Marketplace. All rights reserved.
+</p>
+<script>
+    setTimeout(function(){
+        if($('#mg').length > 0){
+            $('#mg').remove();
+        }
+    },2000)
+</script>

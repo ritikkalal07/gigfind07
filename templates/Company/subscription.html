@@ -1,0 +1,184 @@
+{% extends 'Company/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+{{ user.name }}
+<style>
+  :root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --background-color: #ecf0f1;
+    --text-color: #2c3e50;
+    --card-bg-color: #ffffff;
+    --border-color: #bdc3c7;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    {% comment %} padding: 40px 0; {% endcomment %}
+    line-height: 1.6;
+  }
+  
+  .pricing {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    padding-top:7em;
+    padding-bottom:5em;
+  }
+  
+  .con {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+  
+  .package-box {
+    background: var(--card-bg-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    width: 300px;
+    border: 1px solid var(--border-color);
+  }
+  
+  .package-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .package-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .package-header i {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: var(--accent-color);
+  }
+  
+  .package-header h3 {
+    font-size: 22px;
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+  
+  .package-content {
+    padding: 20px;
+  }
+  
+  .package-content p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: var(--text-color);
+  }
+  
+  .package-content p strong {
+    font-weight: 500;
+    color: var(--primary-color);
+  }
+  
+  .price {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 20px 0;
+  }
+  
+  .price span {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  #bt {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #ecda54;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  #bt:hover {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    color:#ECDA54;
+    border-color:#ECDA54 !important;
+  }
+  
+  @media (max-width: 768px) {
+    .con {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .package-box {
+      width: 100%;
+      max-width: 350px;
+    }
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  
+  .section-title span {
+    font-weight: 700;
+  }
+  
+    </style>
+    <section class="pricing">
+      <h2 class="section-title">Choose Your <span>Subscription Plan</span></h2>
+      <div class="con">
+         {% for subscription in subscriptions %}
+          <div class="package-box">
+              <div class="package-header">
+                  <i class="fas fa-cube" aria-hidden="true"></i>
+                  <h3>Standard</h3>
+              </div>
+              <div class="package-content">
+                <p><strong>Name:</strong> {{subscription.subscription_name}}</p>
+                <p><strong>Subscription Month:</strong> {{subscription.subscription_month}}</p>
+                <p><strong>Subscription Month Price:</strong>₹ {{subscription.subscription_month_price}}</p>
+  
+                  <div class="price">
+                      ₹ {{subscription.total_price}} <span>total</span>
+                  </div>
+                  <a id="bt" href="{% url 'add_to_cart' pk=subscription.pk %}">Subscribe Now</a>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,284 @@
+{% extends 'Freelancer/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <style>
+        .job-card {
+            margin-bottom: 30px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s ease; 
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px); 
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #333; 
+        }
+
+        .job-details {
+            margin-bottom: 15px;
+        }
+
+        .job-details li {
+            margin-bottom: 8px;
+            color: #666; 
+        }
+
+        .job-details li strong {
+            font-weight: bold;
+            color: #333; 
+        }
+
+        .apply-btn {
+            margin-top: 15px;
+            display: inline-block;
+            padding: 8px 20px;
+            border: none;
+            background-color: #ECDA54;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            background-color: #da0833;
+        }
+
+        .wishlist-btn {
+            font-size: 20px;
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin-left: 10px; 
+        }
+
+        .wishlist-btn:hover {
+            color: #ff69b4;
+        }
+
+        .input-group {
+        display: inline-flex;
+        width: auto;
+        }
+
+        .text-primary {
+            color: black !important;
+        }
+
+        .input-group input {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border: 1px solid #ced4da;
+        padding: 8px 12px;
+        font-size: 19px;
+        }
+
+        .input-group button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border: 1px solid #ced4da;
+        background-color: #fff;
+        padding: 8px 12px;
+        font-size: 16px;
+        }
+
+        .input-group button i {
+        vertical-align: middle;
+        }
+
+        .card-body {
+            padding: 25px;
+          }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            padding-top:5em;
+            padding-bottom:none;
+          }
+          .cp-text{
+            margin-bottom:0em;
+          }
+
+ .col-lg-7, .col-md-7 {
+    width: 100%;
+    max-width: 58.333333%;
+    margin: 0 auto;
+}
+
+.advanced-search {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    width: 76em;
+    margin-top:2em;
+    margin-left: -9.5em;
+    
+}
+
+.input-group {
+    width: 100%;
+}
+
+.input-group form {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+#search_query {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+#search_query:focus {
+    border-color: #2196F3;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+}
+
+#search {
+    padding: 12px 25px;
+    background: #ecda54;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    min-width: 120px;
+    transition: all 0.3s ease;
+}
+
+#search:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+}
+
+#search i {
+    margin-right: 8px;
+}
+
+@media (max-width: 992px) {
+    .col-lg-7, .col-md-7 {
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .col-lg-7, .col-md-7 {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .input-group form {
+        flex-direction: column;
+    }
+
+    #search {
+        width: 100%;
+    }
+
+    .advanced-search {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .advanced-search {
+        padding: 10px;
+    }
+
+    #search_query {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    #search {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+    </style>
+
+    <div class="col-lg-7 col-md-7">
+        <div class="advanced-search">
+            {% comment %} <label class="category-btn">Search Job</label> {% endcomment %}
+            <div class="input-group">
+                <form method="GET" action="#">
+                    <input type="text" id="search_query" placeholder="What do you need?" name="search_query" value="{{ request.GET.search_query }}">
+                    <button id="search" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+
+    <section class="site-section">
+        <div class="container">
+            <div class="row">
+                {% for project in projects %}
+                    <div class="col-md-6 mb-6">
+                        <div class="card job-card">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary mb-3">{{ project.title }}</h5>
+                                <ul class="job-details list-unstyled">
+                                    <li><strong class="text-black">Company:</strong> {{ project.company_name}} </li>
+                                    <li><strong class="text-black">City:</strong> {{ project.city }}</li>
+                                    <li><strong class="text-black">Description:</strong> {{ project.description }}</li>
+                                    <li><strong class="text-black">Budget:</strong> {{ project.budget }}</li>
+                                    <li><strong class="text-black">Duration:</strong> {{ project.duration }}</li>
+                                    <li><strong class="text-black">Posted At:</strong> {{ project.posted_at }}</li>
+                                    <li><strong class="text-black">Skills:</strong> {{ project.skills }}</li>
+                                    <li><strong class="text-black">Experience:</strong> {{ project.experience }}</li>
+                                    <li><strong class="text-black">Category:</strong> {{ project.category }}</li>
+                                </ul>
+                                {% if request.session.email %}
+                                <a class="apply-btn" href="{% url 'apply_project' pk=project.pk %}">Apply</a>
+                                 <a class="wishlist-btn" href="{% url 'add_to_wishlist' pk=project.pk %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                                      </svg></a>
+                                </a> 
+                                {% else %}
+							<button  class="btn btn-primary" id="log"><a  href="{% url 'login' %}" style="color: white;"><b>Login</b></a></button>
+
+					
+							{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+{% endblock %}
+

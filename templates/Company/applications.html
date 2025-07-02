@@ -1,0 +1,200 @@
+{% extends 'Company/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+           
+        }
+        .cp-text{
+            margin-bottom:0em;
+          }
+        #pro{
+            border-radius:23px;
+        }
+        #ch{
+            border-radius:23px;
+        }
+        .con{
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top:8em;
+            margin-bottom:3em;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        
+      .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            background-color: #fff;
+        }
+        
+        .table-bordered {
+            border: 1px solid #dee2e6;
+        }
+        
+        .table th,
+        .table td {
+            padding: 12px;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+        
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: bold;
+        }
+        .att{
+            color:black;
+        } 
+        .table tbody tr:nth-of-type(odd) {
+            background-color: rgba(0,0,0,.05);
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(0,0,0,.075);
+        }
+        
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #fff;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+        }
+
+          .btn-success, .btn-danger {
+            display: inline-block;
+            padding: 6px 12px;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+          }
+          
+          .btn-success {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+          }
+          
+          .btn-danger {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+          }
+          
+          .btn-success:hover, .btn-danger:hover {
+            text-decoration: none;
+            background-color: darken(#28a745, 10%);
+            border-color: darken(#28a745, 15%);
+          }
+          
+          .btn-success:focus, .btn-danger:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+          }
+          
+          .btn-outline-success {
+            color: #28a745;
+            border-color: #28a745;
+          }
+          
+          .btn-outline-success:hover {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+          }        
+          
+    </style>
+<body>
+    <div class="con">
+    <h1>Applied Applicant Show Here</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>City</th>
+                <th>Attachments</th>
+                <th>Company</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Accept</th>
+                <th>Reject</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in apply_project %}
+            <tr>
+                <td>{{ i.name }}</td>
+                <td>{{ i.title }}</td>
+                <td>{{ i.city }}</td>
+                <td>
+                    {% if i.attachments %}
+                        <a class="att" href="{{ i.attachments.url }}" download>{{ i.attachments.url }}</a>
+                    {% else %}
+                        No attachments uploaded
+                    {% endif %}
+                </td>
+                
+                <td>{{ i.company_name }}</td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.mobile }}</td>
+                
+                <td>
+                    <form action="{% url 'update_application_status' i.id 'accepted_applications' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" id="ap" class="btn-success">Accept</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'update_application_status' i.id 'rejected_applications' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" id="ap" class="btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+{% endblock %}

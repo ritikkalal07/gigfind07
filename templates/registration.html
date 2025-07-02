@@ -1,0 +1,223 @@
+
+<style>
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 500px;
+  margin: 100px auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.billing-details {
+  background-color: transparent;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 40px;
+  padding-bottom:10px;
+
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background-color: #337ab7;
+  border-color: white !important;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+#userType{
+   margin-bottom:1em;
+}
+
+#sub{
+    border-radius:20px;
+    background-color: #ECDA54;
+    width:7em;
+}
+
+.cp-text{
+  margin-bottom:0em;
+}
+
+#sub:hover{
+    background:transparent;
+}
+
+.col-md-12 {
+    padding-left: 18em !important;
+    padding-top:5em;
+    padding-bottom:5em;
+}
+
+.link {
+  margin-top: 10px;
+}
+
+.link a {
+  color: white;
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.billing-details{
+    width: 600px;
+}
+  
+</style>
+  <link rel="stylesheet" href="static/css/main.css">
+
+
+  {% extends 'Freelancer/base.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+
+{% block content %}
+
+                 
+<div class="section">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" >
+            <div class="billing-details">
+                <h2 class="text-center">Registration Form</h2>
+                {% if msg %}
+                    <b style="color:black;">{{msg}}</b>
+                {% endif %}
+
+        
+        <form name="signup" class="form" method="post" action="{% url 'registration' %}" enctype="multipart/form-data" >
+            {% csrf_token %}
+          
+            <select class="form-control" id="userType" name="userType" onchange="showFields()">
+                <option>---Select User Type</option>
+                <option value="company">Company</option>
+                <option value="applicant">Applicant</option>
+              </select>
+              <div class="form-group">
+                <input type="text" class="form-control" id="name" placeholder="Name" name="name" required pattern="[A-Za-z ]+" title="Name must contain only alphabetic characters">
+            </div>
+
+
+              <div id="companyFields" class="form-group hidden">
+                <input type="url" class="form-control" id="website" placeholder="Website" name="website">
+              </div>
+
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" placeholder="Email"  name="email" required>
+            </div>
+
+            <div class="form-group">
+                <input type="tel" class="form-control" id="mobile" placeholder="Mobile" name="mobile" required pattern="[0-9]{10}" title="Invalid mobile number (10 digits only)">
+            </div>
+
+            <div class="form-group">
+               
+                <input type="text" class="form-control" id="address" placeholder="Address"  name="address" required>
+            </div>
+
+            <div class="form-group">
+              
+                <input type="text" class="form-control" id="city" placeholder="City" name="city" required pattern="[A-Za-z ]+" title="City name must contain only alphabetic characters">
+            </div>
+
+            <div class="form-group">
+              
+                <input type="text" class="form-control" id="pincode" placeholder="Pincode" name="pincode" required pattern="[0-9]{6}" title="Invalid pincode (6 digits only)">
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password" required minlength="6">
+
+            </div>
+
+            <div class="form-group">
+               
+                <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password" name="cpassword" required minlength="6">
+            </div>
+
+            
+            <div class="form-group">
+
+                <input type="file" class="form-control-file" id="Pic" placeholder="Picture" name="Pic" accept="image/*" required>
+            </div>
+
+
+            <button type="submit" id="sub" class="btn btn-primary">Submit</button>
+            <div class="link"> 
+            <b> Have An Account....<a href="{% url 'login' %}">Login Now</a></b>
+            </div>
+
+        </form>
+        <br>
+        <br>
+    </div>
+    
+
+    
+    
+
+   
+
+    
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+    
+</body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    function showFields() {
+      var userType = document.getElementById("userType").value;
+      var companyFields = document.getElementById("companyFields");
+    
+      if (userType === "company") {
+        companyFields.classList.remove("hidden");
+      } else if (userType === "applicant") {
+        companyFields.classList.add("hidden");
+      }
+    }
+    </script>
+    
+
+{% endblock %}
+
+
+

@@ -1,0 +1,205 @@
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+
+        body {
+         font-family: 'Roboto', Arial, sans-serif;
+         background-color: #f4f7f9;
+         color: #333;
+         line-height: 1.6;
+       }
+       
+       .con {
+         background-color: #ffffff;
+         border-radius: 8px;
+         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+         margin: 40px auto;
+         max-width: 800px;
+         padding: 30px;
+         padding-top:1em;
+         margin-top: 7em;
+       }
+     
+       .cp-text{
+         margin-bottom:0em;
+       }
+     
+     #pform{
+         display: flex;
+         flex-wrap: wrap;
+         flex-direction: column-reverse;
+     }
+       
+       .container {
+         width: 100%;
+       }
+       
+       h4 {
+         color: #2c3e50;
+         font-size: 24px;
+         margin-bottom: 30px;
+         text-align: center;
+       }
+       
+       .form-group {
+         margin-bottom: 25px;
+       }
+       
+       label {
+         display: block;
+         margin-bottom: 8px;
+         color: #34495e;
+         font-weight: 600;
+       }
+       
+       .form-control {
+         width: 100%;
+         padding: 10px 15px;
+         border: 1px solid #bdc3c7;
+         border-radius: 4px;
+         font-size: 16px;
+         transition: border-color 0.3s ease;
+       }
+       
+       .form-control:focus {
+         border-color: #3498db;
+         outline: none;
+         box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+       }
+       
+       textarea.form-control {
+         resize: vertical;
+         min-height: 100px;
+       }
+       
+       select.form-control {
+         appearance: none;
+         -webkit-appearance: none;
+         -moz-appearance: none;
+         background-repeat: no-repeat;
+         background-position: right 10px center;
+         padding-right: 30px;
+       }
+       
+       #duration{
+         height:3em;
+       }
+       
+       .btn-primary {
+         padding: 0.75rem 1.5rem;
+         border-radius: 24em;
+         padding: 5px 12px ;
+         background-color: #FFEE5C;
+         border-color:white;
+     } 
+     
+       .btn-primary:hover{
+         border-color:white;
+       }
+     
+       #btn {
+         background-color: #ECDA54;
+         border: none;
+         color: #ffffff;
+         padding: 12px 30px;
+         font-size: 18px;
+         font-weight: 600;
+         border-radius: 4px;
+         cursor: pointer;
+         transition: background-color 0.3s ease;
+         display: block;
+         width: 100%;
+         border-radius: 25px;
+       }
+       
+       #btn:hover {
+         background-color: transparent;
+         border: 1px solid #ddd;
+         color:#ECDA54;
+       }
+       
+       @media (max-width: 768px) {
+         .con {
+           margin: 20px;
+           padding: 20px;
+         }
+       }
+     
+     </style>
+</head>
+<body>
+    <div class="con">
+        <div class="container mt-5">
+            <div class="row" id="pform">
+    
+            <form action="" method="post">
+                {% csrf_token %}
+                <h4>Company Post Project Form</h4> 
+                <div class="form-group">
+                    <label for="company_name">Company Name:</label>
+                    <input type="text" class="form-control" id="company_name" name="company_name" value=" ">
+                </div>
+                
+                <div class="form-group">
+                    <label for="title">Project Title:</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+    
+                 <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="description">Project Description:</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label for="budget">Budget:</label>
+                    <input type="text" class="form-control" id="budget" name="budget" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="duration">Duration:</label>
+                    <select class="form-control" id="duration" name="duration" required>
+                        <option value="more_than_6_months">More than 6 months</option>
+                        <option value="3_to_6_months">3 to 6 months</option>
+                        <option value="1_to_3_months">1 to 3 months</option>
+                        <option value="less_than_1_month">Less than 1 month</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="posted_at">Posted At:</label>
+                    <input type="date" class="form-control" id="posted_at" name="posted_at" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="skills">Skills Required:</label>
+                    <input type="text" class="form-control" id="skills" name="skills" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="experience">Experience Required:</label>
+                    <input type="text" class="form-control" id="experience" name="experience" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="category">Project Category:</label>
+                    <input type="text" class="form-control" id="category" name="category" required>
+                </div>
+    
+                <button type="submit" id="btn"class="btn btn-primary">Post Project</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</body>
+</html> {% endcomment %}
