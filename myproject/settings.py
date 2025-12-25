@@ -21,14 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=%9#nztcc7+@+z$+*3pip4iw5_f3g0bn6rhx=93^e7z*-w!g7-'
+SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-secret-for-local")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
 DEBUG = False
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]  # or your render domain
+
+# ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -50,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'myproject.urls'
 
@@ -89,18 +90,18 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 #     }
 # }
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'freelancing', 
-        'USER': 'root',
-        'PASSWORD': '',
-        # 'HOST': 'localhost',  
-        'PORT': '3306',
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT", "3306"),
         'ATOMIC_REQUESTS': True,
     }
 }
+
 
 
 # Password validation
@@ -147,11 +148,9 @@ RAZORPAY_KEY_SECRET = 'KKmoT5qQjSquJVFSZq1cXAJi'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS=[
-    BASE_DIR /'static',  
-]
 
 # PAYPAL_RECEIVER_EMAIL="sb-4dtqh33567589@business.example.com"
 # PAYPAL_TEST=True
@@ -159,8 +158,9 @@ STATICFILES_DIRS=[
 STATIC_ROOT= BASE_DIR / "staticfiles"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-MEDIA_URL= "/media/"
-MEDIA_ROOT=os.path.join(BASE_DIR,'media/')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 
 
 
@@ -170,11 +170,15 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER= 'shahau933@gmail.com'
-EMAIL_HOST_PASSWORD = 'faot xhfi ormt epxz'
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_USE_SSL = False
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+]
 
 
 from django.contrib.messages import constants as messages
