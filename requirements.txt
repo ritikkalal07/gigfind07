@@ -11,3 +11,4 @@ django-paypal
 pillow
 razorpay
 stripe
+xhtml2pdf==0.2.8
